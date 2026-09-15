@@ -26,7 +26,7 @@ app.use(express.json({ limit: '2mb' }));
 app.use(cookieParser());
 app.use(attachUser);
 
-// --- Salud (para el health check de Render) --------------------------
+// --- Salud (para el health check de Railway) --------------------------
 app.get('/api/health', (req, res) => res.json({ ok: true, ts: Date.now() }));
 
 // --- Auth ---------------------------------------------------------------

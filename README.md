@@ -17,7 +17,7 @@ Multas y Retiros de socios**, calcular la **cascada de reparto (RELACIÓN)** y *
 | Base de datos | SQLite (archivo único, fácil de respaldar) |
 | Excel | ExcelJS (hojas con fórmulas reales) |
 | Frontend | HTML/CSS/JS con la identidad de marca Arivaness |
-| Hosting | Render.com con disco persistente |
+| Hosting | Railway.app con volumen persistente |
 
 ---
 
@@ -33,19 +33,25 @@ npm start                 # http://localhost:3000
 
 La primera vez se crean automáticamente los 2 usuarios definidos en `.env`.
 
-## Desplegar en Render (producción)
+## Desplegar en Railway (producción)
 
-1. Sube esta carpeta a un repositorio de GitHub. Sin terminal: instala
-   **GitHub Desktop**, *Add Local Repository* → `/Users/user/arivaness`, *Publish repository*.
-2. En [Render](https://render.com): **New + → Blueprint** y conecta el repo. Render lee `render.yaml`
-   (servicio web + disco de 1 GB montado en `/var/data`).
-3. En **Environment** define:
+1. El código ya está en GitHub: `github.com/juancarlosdelgadovelandia/Arivaness`.
+2. En [Railway](https://railway.app): **New Project → Deploy from GitHub repo** y selecciona
+   `Arivaness`. Railway lee `railway.json` y detecta Node.js automáticamente (Nixpacks).
+3. Agrega un **Volume** al servicio (pestaña *Volumes* → *New Volume*), con mount path `/data`.
+4. En **Variables** define:
+   - `DB_PATH` = `/data/arivaness.sqlite`
+   - `COOKIE_SECURE` = `true`
+   - `SESSION_DAYS` = `30`
    - `SEED_OWNER_USERNAME`, `SEED_OWNER_PASSWORD`
    - `SEED_ADMIN_USERNAME`, `SEED_ADMIN_PASSWORD`
-4. **Create**. En 2–3 min queda una URL `https://arivaness-app.onrender.com`.
-5. Entra, ve a **Configuración → Usuarios** y cambia las contraseñas.
+5. **Deploy**. En 2–3 min queda una URL tipo `https://arivaness-app.up.railway.app`.
+6. En **Settings → Networking → Public Networking** puedes generar el dominio público y,
+   desde ahí, agregar tu dominio personalizado de GoDaddy (te da un registro CNAME para
+   pegar en la zona DNS de GoDaddy).
+7. Entra, ve a **Configuración → Usuarios** y cambia las contraseñas.
 
-> El archivo `arivaness.sqlite` vive en el disco persistente: los datos **no se pierden**
+> El archivo `arivaness.sqlite` vive en el volumen persistente: los datos **no se pierden**
 > al reiniciar ni al desplegar una versión nueva.
 
 ## Respaldo
@@ -54,7 +60,7 @@ La primera vez se crean automáticamente los 2 usuarios definidos en `.env`.
 npm run backup        # copia data/arivaness.sqlite a data/backups/ (conserva 30)
 ```
 
-En Render se puede programar como **Cron Job** apuntando al mismo disco, o descargar
+En Railway se puede programar como **Cron Job** apuntando al mismo volumen, o descargar
 el archivo periódicamente.
 
 ## Importar los datos de la app vieja
