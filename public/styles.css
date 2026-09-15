@@ -1,0 +1,323 @@
+/* ===== Arivaness — identidad de marca ===================================
+   Vino tinto #671410 · Dorado #C4A362 · Bronce #A3693A · Beige #D9CBB5
+   Títulos: serif tipo Goldenbook (Cormorant Garamond / Georgia)
+   Texto:  Montserrat
+   ====================================================================== */
+
+:root {
+  --vino: #671410;
+  --vino-claro: #8b2d1f;
+  --dorado: #c4a362;
+  --dorado-osc: #a8863f;
+  --bronce: #a3693a;
+  --beige: #d9cbb5;
+  --beige-claro: #efe9df;
+  --fondo: #faf8f5;
+  --card: #ffffff;
+  --texto: #2b2320;
+  --texto-suave: #8a7f75;
+  --borde: #e6ddce;
+  --ok: #2f7d4f;
+  --error: #b23b2e;
+  --radio: 12px;
+  --sombra: 0 4px 14px rgba(103, 20, 16, 0.10);
+  --sombra-lg: 0 10px 30px rgba(103, 20, 16, 0.16);
+  --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --sans: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--sans);
+  background: var(--fondo);
+  color: var(--texto);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.oculto { display: none !important; }
+
+/* ---------- Login ---------- */
+#login {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(circle at 30% 20%, #7a1c15, var(--vino) 60%);
+}
+#login .marca {
+  font-family: var(--serif);
+  color: var(--dorado);
+  font-size: 42px;
+  letter-spacing: 8px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+#login .sub {
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 10px;
+  margin-bottom: 28px;
+}
+#login form {
+  background: var(--card);
+  padding: 24px;
+  border-radius: var(--radio);
+  width: 100%;
+  max-width: 340px;
+  box-shadow: var(--sombra-lg);
+}
+
+/* ---------- Cabecera ---------- */
+header.app {
+  background: linear-gradient(135deg, var(--vino), var(--vino-claro));
+  color: var(--dorado);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 3px solid var(--dorado);
+}
+header.app .marca {
+  font-family: var(--serif);
+  font-size: 22px;
+  letter-spacing: 4px;
+  font-weight: 600;
+}
+header.app select, header.app button {
+  font-family: var(--sans);
+  font-size: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  padding: 6px 8px;
+}
+header.app .usuario { display: flex; align-items: center; gap: 6px; }
+
+/* ---------- Tabs ---------- */
+nav.tabs {
+  display: flex;
+  overflow-x: auto;
+  background: var(--card);
+  border-bottom: 1px solid var(--borde);
+  position: sticky;
+  top: 52px;
+  z-index: 15;
+}
+nav.tabs button {
+  flex: 0 0 auto;
+  padding: 13px 16px;
+  border: none;
+  background: none;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+}
+nav.tabs button.activo { color: var(--vino); border-bottom-color: var(--dorado); }
+
+/* ---------- Layout ---------- */
+main { max-width: 720px; margin: 0 auto; padding: 16px 14px 80px; }
+section.vista { display: none; }
+section.vista.activo { display: block; animation: fade 0.2s ease; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+h2.titulo {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--vino);
+  margin-bottom: 14px;
+}
+h3.sub {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--vino);
+  margin: 22px 0 10px;
+}
+
+/* ---------- Formularios ---------- */
+.campo { margin-bottom: 14px; }
+label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--vino);
+  margin-bottom: 5px;
+}
+input, select, textarea {
+  width: 100%;
+  padding: 12px 12px;
+  border: 1.5px solid var(--borde);
+  border-radius: 10px;
+  font-family: var(--sans);
+  font-size: 16px; /* evita zoom en iOS */
+  background: #fff;
+  color: var(--texto);
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--dorado);
+  box-shadow: 0 0 0 4px rgba(196, 163, 98, 0.15);
+}
+input[readonly] { background: var(--beige-claro); font-weight: 700; color: var(--vino); }
+.fila { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.fila-3 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (min-width: 560px) { .fila-3 { grid-template-columns: 1fr 1fr 1fr; } }
+
+.pista {
+  background: var(--beige-claro);
+  border-left: 3px solid var(--dorado);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  color: var(--vino);
+  margin-top: 10px;
+}
+
+/* ---------- Botones ---------- */
+button.btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.1s ease, filter 0.15s ease;
+}
+button.btn:active { transform: translateY(1px); }
+button.btn.primario { background: var(--vino); color: #fff; box-shadow: var(--sombra); }
+button.btn.dorado { background: var(--dorado); color: var(--vino); }
+button.btn.contorno { background: #fff; color: var(--vino); border: 1.5px solid var(--borde); }
+button.btn.chico { width: auto; padding: 8px 12px; font-size: 11px; }
+button.btn.peligro { background: var(--error); color: #fff; }
+button.btn:disabled { opacity: 0.5; cursor: default; }
+
+/* ---------- Segmented ---------- */
+.segment { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 14px; }
+@media (min-width: 560px) { .segment { grid-template-columns: repeat(5, 1fr); } }
+.segment button {
+  padding: 10px 6px;
+  border: 1.5px solid var(--borde);
+  background: #fff;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--texto-suave);
+  cursor: pointer;
+}
+.segment button.activo { background: var(--vino); color: var(--dorado); border-color: var(--vino); }
+
+/* ---------- Tarjetas resumen ---------- */
+.tarjetas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.tarjeta {
+  background: var(--card);
+  border-radius: var(--radio);
+  padding: 14px;
+  box-shadow: var(--sombra);
+  border-left: 4px solid var(--beige);
+}
+.tarjeta.ingreso { border-left-color: var(--bronce); }
+.tarjeta.gasto { border-left-color: var(--vino); }
+.tarjeta.inversion { border-left-color: var(--dorado); }
+.tarjeta.balance { border-left-color: #4b6b57; }
+.tarjeta .etq { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--texto-suave); font-weight: 700; }
+.tarjeta .val { font-size: 19px; font-weight: 700; margin-top: 4px; }
+.tarjeta .val small { font-size: 11px; color: var(--texto-suave); font-weight: 600; }
+
+/* ---------- Lista de movimientos ---------- */
+.mov {
+  background: var(--card);
+  border-radius: var(--radio);
+  padding: 12px 14px;
+  box-shadow: var(--sombra);
+  border-left: 4px solid var(--beige);
+  margin-bottom: 9px;
+}
+.mov.ingreso { border-left-color: var(--bronce); }
+.mov.gasto { border-left-color: var(--vino); }
+.mov.inversion { border-left-color: var(--dorado); }
+.mov.multa { border-left-color: #7a5c9e; }
+.mov.retiro_socio { border-left-color: #566b8a; }
+.mov .cab { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.mov .fecha { font-size: 11px; color: var(--texto-suave); }
+.mov .monto { font-weight: 700; color: var(--vino); white-space: nowrap; }
+.mov .desc { font-size: 13.5px; margin-top: 3px; }
+.mov .meta { font-size: 11px; color: var(--texto-suave); margin-top: 3px; }
+.mov .acciones { display: flex; gap: 6px; margin-top: 8px; }
+.badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 800;
+  background: var(--beige);
+  color: var(--vino);
+  padding: 2px 7px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ---------- Cascada resumen ---------- */
+.cascada { background: var(--card); border-radius: var(--radio); box-shadow: var(--sombra); overflow: hidden; }
+.cascada .linea {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--borde);
+  font-size: 13.5px;
+}
+.cascada .linea:last-child { border-bottom: none; }
+.cascada .linea .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cascada .linea.sangria { padding-left: 28px; color: var(--texto-suave); font-size: 12.5px; }
+.cascada .linea.fuerte { font-weight: 700; background: var(--beige-claro); }
+.cascada .linea.destacado {
+  background: var(--vino); color: var(--dorado); font-weight: 700;
+  font-family: var(--serif); font-size: 16px;
+}
+.cascada .linea.socio { background: #fbf6ec; font-weight: 700; }
+.cascada .linea.negativo .num { color: var(--error); }
+
+/* ---------- Config ---------- */
+.config-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 0; border-bottom: 1px solid var(--borde);
+}
+.config-item input[type="text"], .config-item input[type="number"] { flex: 1; padding: 8px; font-size: 14px; }
+.config-item.inactivo { opacity: 0.45; }
+.tabla-mini { width: 100%; border-collapse: collapse; font-size: 13px; }
+.tabla-mini th, .tabla-mini td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--borde); }
+
+/* ---------- Toast ---------- */
+#toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+  background: var(--vino); color: #fff;
+  padding: 12px 20px; border-radius: 24px;
+  font-size: 13px; font-weight: 600;
+  box-shadow: var(--sombra-lg);
+  z-index: 100; max-width: 90vw; text-align: center;
+}
+#toast.error { background: var(--error); }
+
+.vacio { text-align: center; color: var(--texto-suave); padding: 30px 12px; font-size: 13px; }
+.error-msg { color: var(--error); font-size: 12.5px; margin-top: 8px; font-weight: 600; }

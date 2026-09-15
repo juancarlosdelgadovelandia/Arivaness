@@ -1,0 +1,33 @@
+# Despliegue en Render (https://render.com) — "Blueprint".
+# En Render: New + → Blueprint → conecta este repo. Render lee este archivo.
+services:
+  - type: web
+    name: arivaness-app
+    runtime: node
+    plan: starter            # ~US$7/mes, necesario para disco persistente
+    region: oregon
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    disk:
+      name: datos
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: DB_PATH
+        value: /var/data/arivaness.sqlite
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: SESSION_DAYS
+        value: "30"
+      # Define estas 4 en el panel de Render (Environment). NO las subas al repo.
+      - key: SEED_OWNER_USERNAME
+        sync: false
+      - key: SEED_OWNER_PASSWORD
+        sync: false
+      - key: SEED_ADMIN_USERNAME
+        sync: false
+      - key: SEED_ADMIN_PASSWORD
+        sync: false

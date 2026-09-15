@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#671410" />
+  <title>Arivaness — Gestor Financiero</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div id="login">
+    <div class="marca">ARIVANESS</div>
+    <div class="sub">Estudio · Gestor Financiero</div>
+    <form id="form-login">
+      <div class="campo">
+        <label for="login-user">Usuario</label>
+        <input id="login-user" autocomplete="username" required />
+      </div>
+      <div class="campo">
+        <label for="login-pass">Contraseña</label>
+        <input id="login-pass" type="password" autocomplete="current-password" required />
+      </div>
+      <button class="btn primario" type="submit">Entrar</button>
+      <div id="login-error" class="error-msg"></div>
+    </form>
+  </div>
+
+  <!-- APP -->
+  <div id="app" class="oculto">
+    <header class="app">
+      <span class="marca">ARIVANESS</span>
+      <div class="usuario">
+        <select id="sede-actual" title="Sede"></select>
+        <button id="btn-menu" title="Cuenta">⋯</button>
+      </div>
+    </header>
+
+    <nav class="tabs" id="tabs">
+      <button data-vista="registrar" class="activo">Registrar</button>
+      <button data-vista="movimientos">Movimientos</button>
+      <button data-vista="resumen">Resumen</button>
+      <button data-vista="exportar">Exportar</button>
+      <button data-vista="config" id="tab-config">Configuración</button>
+    </nav>
+
+    <main>
+      <!-- REGISTRAR -->
+      <section class="vista activo" id="vista-registrar">
+        <h2 class="titulo">Registrar movimiento</h2>
+        <div class="segment" id="seg-tipo">
+          <button data-tipo="ingreso" class="activo">Ingreso</button>
+          <button data-tipo="gasto">Gasto</button>
+          <button data-tipo="inversion">Inversión</button>
+          <button data-tipo="multa">Multa</button>
+          <button data-tipo="retiro_socio">Retiro socio</button>
+        </div>
+
+        <form id="form-mov">
+          <div class="fila">
+            <div class="campo">
+              <label for="m-fecha">Fecha</label>
+              <input id="m-fecha" type="date" required />
+            </div>
+            <div class="campo" id="c-plataforma">
+              <label for="m-plataforma">Plataforma</label>
+              <select id="m-plataforma"></select>
+            </div>
+            <div class="campo oculto" id="c-categoria-gasto">
+              <label for="m-categoria-gasto">Categoría</label>
+              <select id="m-categoria-gasto"></select>
+            </div>
+            <div class="campo oculto" id="c-categoria-inversion">
+              <label for="m-categoria-inversion">Categoría</label>
+              <select id="m-categoria-inversion"></select>
+            </div>
+            <div class="campo oculto" id="c-socio">
+              <label for="m-socio">Socio</label>
+              <select id="m-socio"></select>
+            </div>
+          </div>
+
+          <div class="campo oculto" id="c-subcategoria">
+            <label for="m-subcategoria">Subcategoría de nómina</label>
+            <select id="m-subcategoria"></select>
+          </div>
+
+          <!-- Ingreso: USD + TRM -->
+          <div id="bloque-ingreso">
+            <div class="fila">
+              <div class="campo">
+                <label for="m-usd">Monto en USD</label>
+                <input id="m-usd" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0.00" />
+              </div>
+              <div class="campo">
+                <label for="m-trm">TRM (precio del dólar)</label>
+                <input id="m-trm" type="number" step="0.01" min="0" inputmode="decimal" />
+              </div>
+            </div>
+            <div class="campo">
+              <label for="m-cop-calc">Monto en COP (calculado)</label>
+              <input id="m-cop-calc" readonly />
+              <div class="pista" id="trm-info">TRM del día…</div>
+            </div>
+          </div>
+
+          <!-- Gasto / Inversión / Multa / Retiro: COP directo -->
+          <div class="campo oculto" id="bloque-cop">
+            <label for="m-cop">Monto en COP (efectivo)</label>
+            <input id="m-cop" type="number" step="1" min="0" inputmode="numeric" placeholder="0" />
+          </div>
+
+          <div class="campo">
+            <label for="m-desc">Descripción</label>
+            <input id="m-desc" placeholder="Ej: Ingresos Stripchat semana 1-7" />
+          </div>
+
+          <input type="hidden" id="m-id" />
+          <button class="btn primario" type="submit" id="btn-guardar-mov">Guardar movimiento</button>
+          <button class="btn contorno oculto" type="button" id="btn-cancelar-edicion">Cancelar edición</button>
+          <div id="mov-error" class="error-msg"></div>
+
+          <div class="pista">
+            <strong>Ingresos:</strong> siempre en USD; el COP se calcula con la TRM.<br />
+            <strong>Gastos, inversiones, multas y retiros:</strong> siempre en efectivo, directo en COP.
+          </div>
+        </form>
+      </section>
+
+      <!-- MOVIMIENTOS -->
+      <section class="vista" id="vista-movimientos">
+        <h2 class="titulo">Movimientos</h2>
+        <div class="fila-3">
+          <div class="campo">
+            <label for="f-periodo">Periodo</label>
+            <input id="f-periodo" type="month" />
+          </div>
+          <div class="campo">
+            <label for="f-tipo">Tipo</label>
+            <select id="f-tipo">
+              <option value="">Todos</option>
+              <option value="ingreso">Ingresos</option>
+              <option value="gasto">Gastos</option>
+              <option value="inversion">Inversiones</option>
+              <option value="multa">Multas</option>
+              <option value="retiro_socio">Retiros socio</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="f-categoria">Categoría</label>
+            <select id="f-categoria"><option value="">Todas</option></select>
+          </div>
+        </div>
+        <div class="tarjetas" id="tarjetas-resumen"></div>
+        <div id="lista-mov"></div>
+      </section>
+
+      <!-- RESUMEN -->
+      <section class="vista" id="vista-resumen">
+        <h2 class="titulo">Resumen · Relación</h2>
+        <div class="fila">
+          <div class="campo">
+            <label for="r-periodo">Periodo</label>
+            <input id="r-periodo" type="month" />
+          </div>
+          <div class="campo">
+            <label for="r-cruce">Cruce negativos (ajuste manual)</label>
+            <input id="r-cruce" type="number" step="1" min="0" inputmode="numeric" />
+          </div>
+        </div>
+        <div class="campo">
+          <label for="r-notas">Notas del periodo</label>
+          <input id="r-notas" placeholder="Opcional" />
+        </div>
+        <button class="btn dorado chico" type="button" id="btn-guardar-ajuste">Guardar ajuste</button>
+        <div id="cascada-cont" style="margin-top:16px"></div>
+      </section>
+
+      <!-- EXPORTAR -->
+      <section class="vista" id="vista-exportar">
+        <h2 class="titulo">Exportar a Excel</h2>
+        <div class="campo">
+          <label for="e-periodo">Periodo</label>
+          <input id="e-periodo" type="month" />
+        </div>
+        <div class="campo">
+          <label for="e-sede-nombre">Nombre de la sede (para el archivo)</label>
+          <input id="e-sede-nombre" value="Centro" />
+        </div>
+        <button class="btn primario" type="button" id="btn-descargar">Descargar Excel</button>
+        <div class="pista">
+          El archivo trae hojas separadas: <strong>Ingresos</strong> (bloques por plataforma con
+          PESOS = DÓLARES × TRM y subtotales), <strong>Gastos</strong>, <strong>Inversión</strong>,
+          <strong>Multas y Retiros</strong> y <strong>Resumen</strong> con la cascada completa.
+        </div>
+      </section>
+
+      <!-- CONFIG -->
+      <section class="vista" id="vista-config">
+        <h2 class="titulo">Configuración</h2>
+        <div id="config-cont"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="oculto"></div>
+  <script src="app.js"></script>
+</body>
+</html>

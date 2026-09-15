@@ -1,0 +1,27 @@
+{
+  "name": "arivaness-app",
+  "version": "1.0.0",
+  "description": "Gestor financiero del Estudio Arivaness (ingresos USD/TRM, gastos e inversiones en COP, nómina, cascada de reparto y exportación a Excel).",
+  "type": "module",
+  "main": "server/index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "seed": "node server/seed.js",
+    "backup": "node scripts/backup.js",
+    "import": "node scripts/import-legacy.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^13.0.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "exceljs": "^4.4.0",
+    "express": "^4.19.2"
+  },
+  "allowScripts": {
+    "better-sqlite3@13.0.3": true
+  }
+}
